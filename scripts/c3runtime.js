@@ -7237,7 +7237,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Audio.Acts.StopAll,
 		C3.Plugins.System.Acts.LoadLayoutTextures,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerLoad,
-		C3.Plugins.Eponesh_GameScore.Cnds.PlayerCompare,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
 		C3.Plugins.LocalStorage.Cnds.OnItemExists,
@@ -7269,6 +7268,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Cnds.CompareInstanceVar,
 		C3.Plugins.Text.Acts.MoveToTop,
 		C3.Plugins.TextBox.Acts.SetMaxLength,
+		C3.Plugins.Eponesh_GameScore.Cnds.PlayerCompare,
 		C3.Plugins.TextBox.Cnds.CompareText,
 		C3.Plugins.Sprite.Acts.SetY,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSetName,
@@ -7456,7 +7456,6 @@ self.C3_JsPropNameTable = [
 	{OverlayBorder: 0},
 	{LogoSaffira: 0},
 	{ConfigButton: 0},
-	{ArrowTutorial: 0},
 	{isFollowing: 0},
 	{MusicNote: 0},
 	{MusicNoteBig: 0},
@@ -8104,7 +8103,6 @@ self.C3_ExpressionFuncs = [
 		() => "Insira seu nome de jogador:",
 		() => "Menu",
 		() => "Jogar",
-		() => "score",
 		() => "Conheça",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
