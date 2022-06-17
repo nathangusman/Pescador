@@ -47,3 +47,8 @@ html, body, canvas {
 	src: url('fonts/adrip1.ttf') format('truetype');
 }
 
+@font-face {
+	font-family: 'cutes';
+	src: url('fonts/cutes.otf') format('opentype');
+}
+
