@@ -7762,6 +7762,7 @@ self.C3_ExpressionFuncs = [
 		() => "Back",
 		() => 175,
 		() => 185,
+		() => -3,
 		() => "Colisions",
 		() => "Animation 1",
 		() => 17,
@@ -8144,7 +8145,8 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("Pontuação: ", v0.GetValue());
-		}
+		},
+		() => "http://institutoazul97.com/"
 ];
 
 
