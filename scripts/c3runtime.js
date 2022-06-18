@@ -7125,12 +7125,12 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Sprite.Acts.SetAngle,
 		C3.Plugins.Sprite.Acts.MoveAtAngle,
+		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.System.Cnds.Every,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.Timer.Cnds.OnTimer,
 		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Behaviors.Timer.Cnds.IsTimerRunning,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Sprite.Acts.AddInstanceVar,
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
@@ -7510,6 +7510,7 @@ self.C3_JsPropNameTable = [
 	{FallLimit: 0},
 	{FallLimit2: 0},
 	{VolumeError: 0},
+	{LightningVolume: 0},
 	{DebugVar: 0},
 	{Quantity: 0},
 	{Good: 0},
@@ -7721,7 +7722,10 @@ self.C3_ExpressionFuncs = [
 		() => "C_Transform",
 		() => 20,
 		() => "S_Anel",
-		() => -15,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => v0.GetValue();
+		},
 		() => "Animation 2",
 		() => "S_Landing",
 		p => {
@@ -7741,12 +7745,9 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + 40);
 		},
 		() => "erro",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
-		},
 		() => 5,
 		() => -5,
+		() => "choque",
 		() => 100,
 		() => "Layer 0",
 		() => 30,
