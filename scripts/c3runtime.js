@@ -7223,6 +7223,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Rotate.Acts.SetSpeed,
 		C3.Plugins.Sprite.Acts.SetWidth,
 		C3.Plugins.Sprite.Acts.SetHeight,
+		C3.Plugins.Text.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.Platform.Cnds.IsEnabled,
 		C3.Behaviors.Platform.Acts.SetMaxFallSpeed,
@@ -7349,6 +7350,7 @@ self.C3_JsPropNameTable = [
 	{TextWinnerReference: 0},
 	{Wall: 0},
 	{Feather: 0},
+	{Initial: 0},
 	{LyricsText: 0},
 	{RainbowTile: 0},
 	{Stars: 0},
@@ -7462,6 +7464,7 @@ self.C3_JsPropNameTable = [
 	{LogoSaffira: 0},
 	{ConfigButton: 0},
 	{ArrowTutorial: 0},
+	{SkinButton: 0},
 	{isFollowing: 0},
 	{MusicNote: 0},
 	{MusicNoteBig: 0},
@@ -7885,7 +7888,7 @@ self.C3_ExpressionFuncs = [
 		() => 700,
 		() => "teleport1",
 		() => "end",
-		() => 3000,
+		() => 4000,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and(v0.GetValue(), " pontos");
@@ -7966,6 +7969,10 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(7, 13);
 		},
+		() => 0.6,
+		() => "1",
+		() => "2",
+		() => "3",
 		() => -135,
 		() => "Vignette",
 		() => -20,
@@ -8132,7 +8139,11 @@ self.C3_ExpressionFuncs = [
 		() => "Selection",
 		() => "Reset",
 		() => 500,
-		() => 360
+		() => 360,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("Pontuação: ", v0.GetValue());
+		}
 ];
 
 
