@@ -7032,6 +7032,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.Height,
 		C3.Behaviors.Tween.Cnds.OnTweensFinished,
 		C3.Plugins.System.Cnds.IsGroupActive,
+		C3.Plugins.Touch.Cnds.OnTapGesture,
+		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
+		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.System.Cnds.TriggerOnce,
+		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.System.Acts.SetLayerVisible,
 		C3.Plugins.Particles.Acts.Destroy,
 		C3.Plugins.Audio.Acts.SetMasterVolume,
@@ -7046,10 +7051,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.Angle,
 		C3.Plugins.Shape3D.Acts.MoveToLayer,
 		C3.Behaviors.Bullet.Acts.SetSpeed,
-		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
 		C3.Behaviors.solid.Cnds.IsEnabled,
 		C3.Plugins.Shape3D.Acts.SetVisible,
-		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Shape3D.Acts.SetFaceObject,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Exps.layoutname,
@@ -7077,13 +7080,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Sprite.Acts.SetAngle,
 		C3.Plugins.Sprite.Acts.MoveAtAngle,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.System.Cnds.Every,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Behaviors.Timer.Cnds.OnTimer,
 		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.Sprite.Acts.AddInstanceVar,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
 		C3.Behaviors.scrollto.Acts.Shake,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
@@ -7102,10 +7103,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.gamepad.Cnds.IsButtonIndexDown,
 		C3.Plugins.System.Exps.dt,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
+		C3.Plugins.Sprite.Acts.SetPosToObject,
+		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.Sprite.Exps.ImagePointX,
 		C3.Plugins.Sprite.Exps.ImagePointY,
-		C3.Plugins.Sprite.Acts.SetPosToObject,
 		C3.Plugins.Sprite.Acts.AddChild,
 		C3.Plugins.Sprite.Cnds.OnAnimFinished,
 		C3.Plugins.Sprite.Acts.SetEffectParam,
@@ -7148,6 +7150,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.Text.Cnds.OnCreated,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
+		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.System.Exps.random,
 		C3.Behaviors.Orbit.Acts.Pin,
 		C3.Behaviors.Tween.Acts.TweenValue,
@@ -7173,7 +7176,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.NinePatch.Acts.Destroy,
 		C3.Plugins.NinePatch.Acts.SetVisible,
 		C3.Plugins.Touch.Cnds.OnTouchObject,
-		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Cnds.OnDestroyed,
 		C3.Plugins.Audio.Acts.StopAll,
@@ -7232,11 +7234,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Eponesh_GameScore.Acts.LeaderboardOpen,
 		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.Eponesh_GameScore.Exps.PlayerName,
+		C3.Plugins.Browser.Cnds.IsFullscreen,
+		C3.Plugins.Browser.Acts.CancelFullScreen,
 		C3.Plugins.NinePatch.Cnds.IsOnLayer,
 		C3.Plugins.NinePatch.Acts.SetPosToObject,
 		C3.Plugins.Keyboard.Cnds.IsKeyCodeDown,
-		C3.Plugins.Browser.Cnds.IsFullscreen,
-		C3.Plugins.Browser.Acts.CancelFullScreen,
 		C3.Plugins.LocalStorage.Acts.RemoveItem,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.LocalStorage.Acts.ClearStorage,
@@ -7259,6 +7261,7 @@ self.C3_JsPropNameTable = [
 	{LSNumber: 0},
 	{TutorialStep: 0},
 	{CanReturnToMenu: 0},
+	{HasTouched: 0},
 	{Timer: 0},
 	{GameManager: 0},
 	{SelectedMenuButton: 0},
@@ -7351,6 +7354,7 @@ self.C3_JsPropNameTable = [
 	{TextEndGame: 0},
 	{TextEndGameScore: 0},
 	{ScoreSprite: 0},
+	{TouchScreenIcon: 0},
 	{Letra: 0},
 	{LetraBox: 0},
 	{SaffiraCutscene: 0},
@@ -7601,6 +7605,7 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 1,
 		() => "Player",
+		() => 3,
 		() => "Fundo",
 		() => -89.452807,
 		() => 149.954361,
@@ -7617,7 +7622,6 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject();
 		},
 		() => "Rainbow",
-		() => 3,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0();
@@ -7753,6 +7757,7 @@ self.C3_ExpressionFuncs = [
 		() => "DownLoop",
 		() => "Rolling",
 		() => "Animations",
+		() => 8,
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(2);
@@ -7777,7 +7782,6 @@ self.C3_ExpressionFuncs = [
 		() => 270,
 		() => 315,
 		() => 359,
-		() => 8,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(163, 255, 237);
@@ -7846,6 +7850,10 @@ self.C3_ExpressionFuncs = [
 		() => -281492157629439,
 		() => -1023,
 		() => "highscore",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() / 2);
+		},
 		() => "Notes",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
