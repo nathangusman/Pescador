@@ -7081,6 +7081,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Tween.Cnds.OnTweensFinished,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Acts.SetLayerVisible,
+		C3.Plugins.Particles.Acts.Destroy,
 		C3.Plugins.Audio.Acts.SetMasterVolume,
 		C3.Behaviors.Tween.Acts.StopAllTweens,
 		C3.Plugins.TiledBg.Acts.SetWidth,
@@ -7121,7 +7122,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Behaviors.Platform.Cnds.IsFalling,
 		C3.Plugins.Sprite.Acts.SetOpacity,
-		C3.Plugins.Particles.Acts.SetAngle,
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.Sprite.Acts.SetAngle,
 		C3.Plugins.Sprite.Acts.MoveAtAngle,
@@ -7163,8 +7163,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Sprite.Acts.SetDefaultColor,
 		C3.Plugins.System.Exps.rgbex255,
-		C3.Plugins.Particles.Acts.SetDefaultColor,
-		C3.Plugins.Sprite.Exps.ColorValue,
 		C3.Plugins.Sprite.Cnds.OnAnyAnimFinished,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSetScore,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
@@ -7179,8 +7177,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetFontColor,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Text.Acts.SetBoolInstanceVar,
-		C3.Plugins.Text.Exps.X,
-		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.System.Acts.SetTimescale,
 		C3.Behaviors.scrollto.Acts.SetEnabled,
 		C3.Plugins.System.Acts.ScrollToObject,
@@ -7213,9 +7209,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.LOS.Cnds.HasLOSToObject,
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
-		C3.Plugins.Particles.Cnds.OnCreated,
-		C3.Plugins.Particles.Acts.MoveToBottom,
-		C3.Plugins.Particles.Acts.Destroy,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Plugins.System.Exps.rgb,
 		C3.Plugins.System.Exps.choose,
@@ -7505,6 +7498,7 @@ self.C3_JsPropNameTable = [
 	{ArrowHud: 0},
 	{LineOfSight: 0},
 	{Notes: 0},
+	{Particles: 0},
 	{CurrentHighScore: 0},
 	{TurnStrength: 0},
 	{FallLimit: 0},
@@ -7749,7 +7743,6 @@ self.C3_ExpressionFuncs = [
 		() => -5,
 		() => "choque",
 		() => 100,
-		() => "Layer 0",
 		() => 30,
 		p => {
 			const n0 = p._GetNode(0);
@@ -7868,23 +7861,7 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("+", v0.GetValue());
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 14);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 8);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 25);
-		},
 		() => 1000,
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 34);
-		},
 		() => -281474976711679,
 		() => "Triggers",
 		() => 700,
@@ -7987,6 +7964,7 @@ self.C3_ExpressionFuncs = [
 		() => "Utilize o botão de salto para girar. Twist Carpado tem pontuação extra!",
 		() => "Colete as notas musicais para ganhar pontos.",
 		() => 9900,
+		() => "Layer 0",
 		() => "Music",
 		() => "music",
 		() => "Check/Exists/Get/Missing",
