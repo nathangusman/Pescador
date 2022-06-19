@@ -3342,19 +3342,6 @@ self["C3_Shaders"]["vignette"] = {
 	animated: false,
 	parameters: [["vignetteStart",0,"percent"],["vignetteEnd",0,"percent"]]
 };
-self["C3_Shaders"]["warpripple"] = {
-	glsl: "#ifdef GL_FRAGMENT_PRECISION_HIGH\n#define highmedp highp\n#else\n#define highmedp mediump\n#endif\nvarying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform mediump vec2 srcOriginStart;\nuniform mediump vec2 srcOriginEnd;\nuniform highmedp float seconds;\nuniform mediump vec2 pixelSize;\nuniform mediump float freq;\nuniform mediump float amp;\nuniform mediump float speed;\nconst mediump float PI = 3.1415926;\nvoid main(void)\n{\nmediump vec2 srcOriginSize = srcOriginEnd - srcOriginStart;\nmediump vec2 tex = (vTex - srcOriginStart) / srcOriginSize;\ntex = tex * 2.0 - 1.0;\nmediump float d = length(tex);\nmediump float a = atan(tex.y, tex.x);\nd += sin((d * 2.0 * PI) * freq / (pixelSize.x * 750.0) + (seconds * speed)) * amp * (pixelSize.x * 750.0);\ntex.x = cos(a) * d;\ntex.y = sin(a) * d;\ntex = (tex + 1.0) / 2.0;\ntex = clamp(tex, 0.0, 1.0);\ntex = tex * srcOriginSize + srcOriginStart;\ngl_FragColor = texture2D(samplerFront, tex);\n}",
-	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\nstruct ShaderParams {\nfreq : f32;\namp : f32;\nspeed : f32;\n};\n%%SHADERPARAMS_BINDING%% var<uniform> shaderParams : ShaderParams;\n%%C3PARAMS_STRUCT%%\n%%C3_UTILITY_FUNCTIONS%%\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\nlet pi : f32 = 3.1415926;\n@stage(fragment)\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar pixelSize : vec2<f32> = c3_getPixelSize(textureFront);\nvar tex = c3_srcOriginToNorm(input.fragUV);\ntex = tex * 2.0 - 1.0;\nvar d : f32 = length(tex);\nvar a = atan2(tex.y, tex.x);\nd = d + sin((d * 2.0 * pi) * shaderParams.freq / (pixelSize.x * 750.0) + (c3Params.seconds * shaderParams.speed)) * shaderParams.amp * (pixelSize.x * 750.0);\ntex.x = cos(a) * d;\ntex.y = sin(a) * d;\ntex = (tex + 1.0) / 2.0;\ntex = c3_clamp2(tex, 0.0, 1.0);\ntex = c3_normToSrcOrigin(tex);\nvar output : FragmentOutput;\noutput.color = textureSample(textureFront, samplerFront, tex);\nreturn output;\n}",
-	blendsBackground: false,
-	usesDepth: false,
-	extendBoxHorizontal: 50,
-	extendBoxVertical: 50,
-	crossSampling: false,
-	mustPreDraw: false,
-	preservesOpaqueness: false,
-	animated: true,
-	parameters: [["freq",0,"float"],["amp",0,"percent"],["speed",0,"float"]]
-};
 
 }
 
@@ -6622,6 +6609,16 @@ WindowY(){return this._windowY},WindowWidth(){return this._windowWidth},WindowHe
 }
 
 {
+'use strict';{const C3=self.C3;C3.Behaviors.Rotate=class RotateBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Rotate.Type=class RotateType extends C3.SDKBehaviorTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const SPEED=0;const ACCELERATION=1;const ENABLE=2;C3.Behaviors.Rotate.Instance=class RotateInstance extends C3.SDKBehaviorInstanceBase{constructor(inst,properties){super(inst);this._speed=0;this._acceleration=0;this._isEnabled=true;if(properties){this._speed=C3.toRadians(properties[SPEED]);this._acceleration=C3.toRadians(properties[ACCELERATION]);this._isEnabled=properties[ENABLE]}if(this._isEnabled)this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"s":this._speed,
+"a":this._acceleration,"e":this._isEnabled}}LoadFromJson(o){this._speed=o["s"];this._acceleration=o["a"];this._SetEnabled(o["e"])}Tick(){if(!this._isEnabled)return;const dt=this._runtime.GetDt(this._inst);if(dt===0)return;if(this._acceleration!==0)this._speed+=this._acceleration*dt;if(this._speed!==0){const wi=this._inst.GetWorldInfo();wi.SetAngle(wi.GetAngle()+this._speed*dt);wi.SetBboxChanged()}}GetPropertyValueByIndex(index){switch(index){case SPEED:return C3.toDegrees(this._speed);case ACCELERATION:return C3.toDegrees(this._acceleration);
+case ENABLE:return this._isEnabled}}SetPropertyValueByIndex(index,value){switch(index){case SPEED:this._speed=C3.toRadians(value);break;case ACCELERATION:this._acceleration=C3.toRadians(value);break;case ENABLE:this._SetEnabled(value);break}}_SetEnabled(e){this._isEnabled=!!e;if(this._isEnabled)this._StartTicking();else this._StopTicking()}GetDebuggerProperties(){const prefix="behaviors.rotate";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.speed.name",value:C3.toDegrees(this._speed),
+onedit:v=>this._speed=C3.toRadians(v)},{name:prefix+".properties.acceleration.name",value:C3.toDegrees(this._acceleration),onedit:v=>this._acceleration=C3.toRadians(v)},{name:prefix+".properties.enabled.name",value:this._isEnabled,onedit:v=>this._SetEnabled(v)}]}]}}}{const C3=self.C3;C3.Behaviors.Rotate.Cnds={IsEnabled(){return this._isEnabled}}}{const C3=self.C3;C3.Behaviors.Rotate.Acts={SetSpeed(s){this._speed=C3.toRadians(s)},SetAcceleration(a){this._acceleration=C3.toRadians(a)},SetEnabled(e){this._SetEnabled(e)}}}
+{const C3=self.C3;C3.Behaviors.Rotate.Exps={Speed(){return C3.toDegrees(this._speed)},Acceleration(){return C3.toDegrees(this._acceleration)}}};
+
+}
+
+{
 'use strict';{const C3=self.C3;C3.Behaviors.Sin=class SinBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Sin.Type=class SinType extends C3.SDKBehaviorTypeBase{constructor(behaviorType){super(behaviorType)}Release(){super.Release()}OnCreate(){}}}
 {const C3=self.C3;const C3X=self.C3X;const IBehaviorInstance=self.IBehaviorInstance;const MOVEMENT=0;const WAVE=1;const PERIOD=2;const PERIOD_RANDOM=3;const PERIOD_OFFSET=4;const PERIOD_OFFSET_RANDOM=5;const MAGNITUDE=6;const MAGNITUDE_RANDOM=7;const ENABLE=8;const HORIZONTAL=0;const VERTICAL=1;const SIZE=2;const WIDTH=3;const HEIGHT=4;const ANGLE=5;const OPACITY=6;const VALUE=7;const FORWARDS_BACKWARDS=8;const ZELEVATION=9;const SINE=0;const TRIANGLE=1;const SAWTOOTH=2;const REVERSE_SAWTOOTH=3;const SQUARE=
 4;const _2pi=2*Math.PI;const _pi_2=Math.PI/2;const _3pi_2=3*Math.PI/2;const MOVEMENT_LOOKUP=[0,1,8,3,4,2,5,6,9,7];C3.Behaviors.Sin.Instance=class SinInstance extends C3.SDKBehaviorInstanceBase{constructor(behInst,properties){super(behInst);this._i=0;this._movement=0;this._wave=0;this._period=0;this._mag=0;this._isEnabled=true;this._basePeriod=0;this._basePeriodOffset=0;this._baseMag=0;this._periodRandom=0;this._periodOffsetRandom=0;this._magnitudeRandom=0;this._initialValue=0;this._initialValue2=
@@ -6643,16 +6640,6 @@ const i=VALID_MOVEMENTS.indexOf(m);if(i===-1)throw new Error("invalid movement")
 {const C3=self.C3;C3.Behaviors.Sin.Cnds={IsEnabled(){return this._IsEnabled()},CompareMovement(m){return this._GetMovement()===m},ComparePeriod(cmp,v){return C3.compare(this._GetPeriod(),cmp,v)},CompareMagnitude(cmp,v){return C3.compare(this._GetMagnitude_ConvertAngle(),cmp,v)},CompareWave(w){return this._GetWave()===w}}}
 {const C3=self.C3;C3.Behaviors.Sin.Acts={SetEnabled(e){this._SetEnabled(e!==0)},SetPeriod(x){this._SetPeriod(x)},SetMagnitude(x){this._SetMagnitude_ConvertAngle(x)},SetMovement(m){this._SetMovement(m)},SetWave(w){this._wave=w},SetPhase(x){const _2pi=Math.PI*2;this._SetPhase(x*_2pi%_2pi)},UpdateInitialState(){this.Init()}}}
 {const C3=self.C3;C3.Behaviors.Sin.Exps={CyclePosition(){return this._GetPhase()/(2*Math.PI)},Period(){return this._GetPeriod()},Magnitude(){return this._GetMagnitude_ConvertAngle()},Value(){return this.WaveFunc(this._GetPhase())*this._GetMagnitude_ConvertAngle()}}};
-
-}
-
-{
-'use strict';{const C3=self.C3;C3.Behaviors.Rotate=class RotateBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Behaviors.Rotate.Type=class RotateType extends C3.SDKBehaviorTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
-{const C3=self.C3;const SPEED=0;const ACCELERATION=1;const ENABLE=2;C3.Behaviors.Rotate.Instance=class RotateInstance extends C3.SDKBehaviorInstanceBase{constructor(inst,properties){super(inst);this._speed=0;this._acceleration=0;this._isEnabled=true;if(properties){this._speed=C3.toRadians(properties[SPEED]);this._acceleration=C3.toRadians(properties[ACCELERATION]);this._isEnabled=properties[ENABLE]}if(this._isEnabled)this._StartTicking()}Release(){super.Release()}SaveToJson(){return{"s":this._speed,
-"a":this._acceleration,"e":this._isEnabled}}LoadFromJson(o){this._speed=o["s"];this._acceleration=o["a"];this._SetEnabled(o["e"])}Tick(){if(!this._isEnabled)return;const dt=this._runtime.GetDt(this._inst);if(dt===0)return;if(this._acceleration!==0)this._speed+=this._acceleration*dt;if(this._speed!==0){const wi=this._inst.GetWorldInfo();wi.SetAngle(wi.GetAngle()+this._speed*dt);wi.SetBboxChanged()}}GetPropertyValueByIndex(index){switch(index){case SPEED:return C3.toDegrees(this._speed);case ACCELERATION:return C3.toDegrees(this._acceleration);
-case ENABLE:return this._isEnabled}}SetPropertyValueByIndex(index,value){switch(index){case SPEED:this._speed=C3.toRadians(value);break;case ACCELERATION:this._acceleration=C3.toRadians(value);break;case ENABLE:this._SetEnabled(value);break}}_SetEnabled(e){this._isEnabled=!!e;if(this._isEnabled)this._StartTicking();else this._StopTicking()}GetDebuggerProperties(){const prefix="behaviors.rotate";return[{title:"$"+this.GetBehaviorType().GetName(),properties:[{name:prefix+".properties.speed.name",value:C3.toDegrees(this._speed),
-onedit:v=>this._speed=C3.toRadians(v)},{name:prefix+".properties.acceleration.name",value:C3.toDegrees(this._acceleration),onedit:v=>this._acceleration=C3.toRadians(v)},{name:prefix+".properties.enabled.name",value:this._isEnabled,onedit:v=>this._SetEnabled(v)}]}]}}}{const C3=self.C3;C3.Behaviors.Rotate.Cnds={IsEnabled(){return this._isEnabled}}}{const C3=self.C3;C3.Behaviors.Rotate.Acts={SetSpeed(s){this._speed=C3.toRadians(s)},SetAcceleration(a){this._acceleration=C3.toRadians(a)},SetEnabled(e){this._SetEnabled(e)}}}
-{const C3=self.C3;C3.Behaviors.Rotate.Exps={Speed(){return C3.toDegrees(this._speed)},Acceleration(){return C3.toDegrees(this._acceleration)}}};
 
 }
 
@@ -7031,8 +7018,8 @@ const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
 		C3.Plugins.Sprite,
-		C3.Behaviors.Sin,
 		C3.Behaviors.Rotate,
+		C3.Behaviors.Sin,
 		C3.Plugins.Shape3D,
 		C3.Behaviors.Timer,
 		C3.Behaviors.Flash,
@@ -7164,11 +7151,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetDefaultColor,
 		C3.Plugins.System.Exps.rgbex255,
 		C3.Plugins.Sprite.Cnds.OnAnyAnimFinished,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSetScore,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
-		C3.Plugins.Eponesh_GameScore.Acts.PlayerWaitForReady,
-		C3.Plugins.Sprite.Acts.ToggleBoolInstanceVar,
 		C3.Plugins.NinePatch.Acts.SetOpacity,
 		C3.Plugins.TiledBg.Acts.SetOpacity,
 		C3.Plugins.System.Cnds.CompareBoolVar,
@@ -7195,29 +7177,31 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.TiledBg.Exps.Height,
 		C3.Plugins.NinePatch.Acts.SetDefaultColor,
 		C3.Plugins.NinePatch.Acts.SetEffectParam,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSetScore,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSet,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerSync,
+		C3.Plugins.Eponesh_GameScore.Acts.PlayerWaitForReady,
 		C3.Plugins.Text.Acts.Destroy,
 		C3.Plugins.Text.Cnds.OnCreated,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
 		C3.Plugins.System.Exps.random,
-		C3.Behaviors.Orbit.Acts.SetTarget,
-		C3.Plugins.Sprite.Exps.X,
-		C3.Plugins.Sprite.Exps.Y,
+		C3.Behaviors.Orbit.Acts.Pin,
 		C3.Behaviors.Tween.Acts.TweenValue,
 		C3.Behaviors.Tween.Cnds.IsPlaying,
 		C3.Behaviors.Orbit.Acts.SetRadius,
 		C3.Behaviors.Tween.Exps.Value,
+		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.LOS.Cnds.HasLOSToObject,
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
+		C3.Plugins.Sprite.Exps.X,
+		C3.Plugins.Sprite.Exps.Y,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
-		C3.Plugins.Sprite.Acts.SubInstanceVar,
-		C3.Plugins.System.Exps.rgb,
 		C3.Plugins.System.Exps.choose,
 		C3.Plugins.TiledBg.Acts.SetAngle,
 		C3.Behaviors.Rotate.Acts.SetSpeed,
 		C3.Plugins.Sprite.Acts.SetWidth,
 		C3.Plugins.Sprite.Acts.SetHeight,
 		C3.Plugins.Text.Cnds.IsBoolInstanceVarSet,
-		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.Platform.Cnds.IsEnabled,
 		C3.Behaviors.Platform.Acts.SetMaxFallSpeed,
 		C3.Plugins.Text.Acts.SetFontSize,
@@ -7231,8 +7215,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Cnds.OnDestroyed,
 		C3.Plugins.Audio.Acts.StopAll,
-		C3.Plugins.System.Acts.LoadLayoutTextures,
 		C3.Plugins.Eponesh_GameScore.Acts.PlayerLoad,
+		C3.Plugins.System.Acts.LoadLayoutTextures,
 		C3.Plugins.Eponesh_GameScore.Cnds.PlayerCompare,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
@@ -7275,6 +7259,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.TileMovement.Acts.SetEnabled,
 		C3.Behaviors.TileMovement.Cnds.IsEnabled,
 		C3.Plugins.Text.Exps.Text,
+		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.Behaviors.TileMovement.Acts.SimulateControl,
 		C3.Plugins.Text.Acts.SetSize,
 		C3.Plugins.NinePatch.Exps.Width,
@@ -7293,16 +7278,18 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.LocalStorage.Acts.ClearStorage,
 		C3.Behaviors.Rotate.Acts.SetEnabled,
 		C3.Behaviors.Flash.Acts.Flash,
+		C3.Plugins.System.Cnds.OnImageLoadingComplete,
+		C3.Plugins.System.Acts.SetLayerInteractive,
 		C3.Plugins.gamepad.Cnds.IsButtonDown,
 		C3.Plugins.Browser.Acts.Close
 	];
 };
 self.C3_JsPropNameTable = [
-	{Sine: 0},
 	{Glow: 0},
 	{GlowBig: 0},
 	{GlowMini: 0},
 	{Rotate: 0},
+	{Sine: 0},
 	{GlowMagnet: 0},
 	{Rainbow3D: 0},
 	{GlowRing: 0},
@@ -7849,7 +7836,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 150,
 		() => "Debug",
-		() => "highscore",
 		() => "LocalStorage",
 		() => "Functions",
 		() => 73.064487,
@@ -7895,6 +7881,7 @@ self.C3_ExpressionFuncs = [
 		},
 		() => -281492157629439,
 		() => -1023,
+		() => "highscore",
 		() => "Notes",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -7912,22 +7899,6 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpBehavior("radend");
 		},
 		() => "Tower",
-		() => "Rosa",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => (v0.GetValue() * f1());
-		},
-		() => "Red",
-		() => "Green",
-		() => "Blue",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			const n1 = p._GetNode(1);
-			const n2 = p._GetNode(2);
-			const n3 = p._GetNode(3);
-			return () => f0(n1.ExpInstVar(), n2.ExpInstVar(), n3.ExpInstVar());
-		},
 		() => "Direita",
 		() => "Esquerda",
 		p => {
@@ -8120,6 +8091,7 @@ self.C3_ExpressionFuncs = [
 		() => "Reset",
 		() => 500,
 		() => 360,
+		() => "Buttons",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("Pontuação: ", v0.GetValue());
