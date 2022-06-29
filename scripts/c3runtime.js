@@ -7087,6 +7087,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.AddInstanceVar,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
 		C3.Behaviors.scrollto.Acts.Shake,
+		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Plugins.gamepad.Cnds.OnButtonIndexDown,
@@ -7157,7 +7158,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Tween.Cnds.IsPlaying,
 		C3.Behaviors.Orbit.Acts.SetRadius,
 		C3.Behaviors.Tween.Exps.Value,
-		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.LOS.Cnds.HasLOSToObject,
 		C3.Plugins.Sprite.Acts.SetTowardPosition,
 		C3.Plugins.Sprite.Acts.MoveToBottom,
@@ -7169,9 +7169,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Cnds.IsBoolInstanceVarSet,
 		C3.Behaviors.Platform.Cnds.IsEnabled,
 		C3.Behaviors.Platform.Acts.SetMaxFallSpeed,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Plugins.Sprite.Exps.AnimationName,
 		C3.Plugins.Text.Acts.SetFontSize,
 		C3.Plugins.Particles.Acts.SetVisible,
-		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.System.Acts.SetObjectTimescale,
 		C3.Plugins.NinePatch.Acts.Destroy,
 		C3.Plugins.NinePatch.Acts.SetVisible,
@@ -7247,7 +7248,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnImageLoadingComplete,
 		C3.Plugins.System.Acts.SetLayerInteractive,
 		C3.Plugins.gamepad.Cnds.IsButtonDown,
-		C3.Plugins.Browser.Acts.Close
+		C3.Plugins.Browser.Acts.Close,
+		C3.Plugins.System.Acts.SetBoolVar
 	];
 };
 self.C3_JsPropNameTable = [
@@ -7411,6 +7413,7 @@ self.C3_JsPropNameTable = [
 	{LogoSaffira: 0},
 	{ConfigButton: 0},
 	{ArrowTutorial: 0},
+	{FullscreenButton: 0},
 	{SkinButton: 0},
 	{isFollowing: 0},
 	{MusicNote: 0},
@@ -7431,6 +7434,8 @@ self.C3_JsPropNameTable = [
 	{LitteHell: 0},
 	{FadeWhite: 0},
 	{CarWalk: 0},
+	{SkinBlocker: 0},
+	{TextSkinBlocker: 0},
 	{Speed: 0},
 	{Time: 0},
 	{Black: 0},
@@ -7494,7 +7499,8 @@ self.C3_JsPropNameTable = [
 	{Letra8: 0},
 	{Letra9: 0},
 	{Reset: 0},
-	{Online: 0}
+	{Online: 0},
+	{IsUsingSkin: 0}
 ];
 }
 
@@ -7896,6 +7902,7 @@ self.C3_ExpressionFuncs = [
 		() => "2",
 		() => "3",
 		() => -135,
+		() => "Skin",
 		() => "Vignette",
 		() => -20,
 		() => "tutorial",
@@ -8084,7 +8091,10 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("Pontuação: ", v0.GetValue());
 		},
-		() => "http://institutoazul97.com/"
+		() => "http://institutoazul97.com/",
+		() => 3000,
+		() => ".",
+		() => ","
 ];
 
 
