@@ -7120,6 +7120,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.OnAnyAnimFinished,
 		C3.Plugins.NinePatch.Acts.SetOpacity,
 		C3.Plugins.TiledBg.Acts.SetOpacity,
+		C3.Plugins.TiledBg.Cnds.HasParent,
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Acts.CreateObject,
